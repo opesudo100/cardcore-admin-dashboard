@@ -1,0 +1,13 @@
+<svg width="30" height="20" viewBox="0 0 30 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Mastercard">
+<ellipse id="Ellipse 5" cx="20.7688" cy="9.99959" rx="9.23119" ry="9.37734" fill="#F79E1B"/>
+<ellipse id="Ellipse 4" cx="9.23122" cy="10.0004" rx="9.23122" ry="9.37734" fill="url(#paint0_radial_20881_1784)"/>
+</g>
+<defs>
+<radialGradient id="paint0_radial_20881_1784" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(18.4624 10.0004) rotate(-180) scale(12.5006 12.6985)">
+<stop stop-color="#EB001B" stop-opacity="0.92"/>
+<stop offset="0.110299" stop-color="#EB001B" stop-opacity="0.803455"/>
+<stop offset="1" stop-color="#EB001B"/>
+</radialGradient>
+</defs>
+</svg>
