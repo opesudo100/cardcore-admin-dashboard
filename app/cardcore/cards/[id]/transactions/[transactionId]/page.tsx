@@ -1,10 +1,5 @@
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function CardTransactionDetailsRedirect({
-  params,
-}: {
-  params: Promise<{ transactionId: string }>;
-}) {
-  const { transactionId } = await params;
-  redirect(`/cardcore/transactions/${transactionId}`);
-}
+import TransactionDetailsPage from "@/app/cardcore/transactions/[transactionId]/page";
+
+export default TransactionDetailsPage;

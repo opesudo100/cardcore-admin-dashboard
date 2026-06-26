@@ -93,7 +93,7 @@ export function TransactionView({ id }: { id: string }) {
             ) : transactions.map((tx) => (
               <tr
                 key={tx.id || tx._id || tx.rrn}
-                onClick={() => router.push(`/cardcore/transactions/${tx._id || tx.id || tx.rrn}`)}
+                onClick={() => router.push(`/cardcore/cards/${id}/transactions/${tx._id || tx.id || tx.rrn}`)}
                 className="cardcore-table-row hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <td className="py-3 pl-3 pr-2 text-[12px] text-[#374151] sm:px-6">
