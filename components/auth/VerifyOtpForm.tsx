@@ -126,6 +126,12 @@ export function VerifyOtpForm() {
         const userRes = await GeneralService.getUserData();
         if (userRes.statusCode !== 200) {
            console.warn("User profile retrieval partial failure:", userRes.message);
+        } else if (typeof window !== "undefined") {
+          const user = GeneralService.getStorageData("core");
+          const shouldSetUp2FA = user?.twoFactorAuthEnabled === false;
+          if (shouldSetUp2FA) {
+            sessionStorage.setItem("pending2FASetup", "true");
+          }
         }
       } catch (userDataErr) {
         console.error("Failed to fetch user data after login:", userDataErr);

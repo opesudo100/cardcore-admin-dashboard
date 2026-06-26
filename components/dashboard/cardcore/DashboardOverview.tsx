@@ -43,8 +43,8 @@ export function CardCoreDashboardOverview() {
             totalCardPrograms: data.totalCardPrograms || 0,
             totalCards: data.totalCards || 0,
             cards: {
-              physical: data.physicalCards || 0,
-              virtual: data.virtualCards || 0,
+              physical: data.cards?.physical || data.physicalCards || 0,
+              virtual: data.cards?.virtual || data.virtualCards || 0,
             },
             institutions: {
               pending: data.pendingInstitutions || 0,

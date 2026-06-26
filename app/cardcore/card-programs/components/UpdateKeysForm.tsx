@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { X, ChevronDown, AlertCircle } from "lucide-react";
+import { ChevronDown, AlertCircle } from "lucide-react";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
 import { CardProgramService } from "@/lib/services/cardProgramService";
@@ -233,15 +233,15 @@ export const UpdateKeysForm = ({ programId, keys, onCancel, onSuccess }: UpdateK
   };
 
   return (
-    <div className="flex fixed top-0 left-0 right-0 z-[99999999999999] bottom-0 bg-[#00000085] overflow-auto sm:p-[50px] p-[16px] pb-0 items-center justify-center animate-in fade-in duration-150">
-      <div className="h-screen w-full overflow-auto pb-[50px] flex items-center justify-center relative">
+    <div className="fixed inset-0 z-[99999999999999] flex items-start justify-center bg-[#00000085] overflow-y-auto p-3 sm:p-[50px] sm:items-center animate-in fade-in duration-150">
+      <div className="min-h-full w-full flex items-start justify-center relative py-4 sm:items-center sm:py-0">
         <div onClick={onCancel} className="absolute left-0 right-0 bottom-0 top-0 cursor-pointer" />
         
-        <div className="bg-[#fff] relative z-[9999999999] rounded-[5px] w-full h-fit sm:p-[40px] sm:px-[40px] px-[16px] p-[20px] pt-[40px] pb-[10px] sm:max-w-[650px] flex flex-col mt-[100px] gap-[30px]">
+        <div className="bg-[#fff] relative z-[9999999999] rounded-[5px] w-full max-h-[calc(100dvh-32px)] overflow-y-auto sm:max-h-[calc(100dvh-100px)] sm:p-[40px] sm:px-[40px] px-[16px] p-[20px] pt-[32px] pb-[20px] sm:max-w-[650px] flex flex-col gap-[24px] sm:gap-[30px]">
           
           {/* Header */}
-          <div className="flex justify-between items-start">
-            <div className="flex flex-col">
+          <div className="flex justify-between items-start gap-4">
+            <div className="flex min-w-0 flex-col">
               <span className="sm:text-[27px] text-[24px] font-[600] text-[#111827]">
                 Update Card Program Keys
               </span>
@@ -251,7 +251,7 @@ export const UpdateKeysForm = ({ programId, keys, onCancel, onSuccess }: UpdateK
             </div>
             <button 
               onClick={onCancel}
-              className="cursor-pointer p-1  rounded-full transition-colors relative w-4 h-4"
+              className="cursor-pointer p-1 rounded-full transition-colors relative w-4 h-4 shrink-0"
             >
               <Image 
                 src="/assets/icons/close_.svg" 
@@ -270,20 +270,20 @@ export const UpdateKeysForm = ({ programId, keys, onCancel, onSuccess }: UpdateK
           )}
 
           <div className="flex flex-col gap-[14px] scrollbar-hidden">
-            <div className="flex flex-col w-full px-1">
+            <div className="flex flex-col w-full sm:px-1">
               <span className="text-[#374151] text-[16px] font-[600]">Keys</span>
 
               {/* HSM Selection Bar */}
-              <div className="bg-[#081a460c] flex p-[10px] items-center justify-between gap-[14px] mt-[14px] rounded-[4px]">
-                <div className="flex gap-1.5 items-center">
-                  <AlertCircle size={18} className="text-[#081A46]" />
-                  <span className="text-[14px] font-[700] text-[#081A46]">
+              <div className="bg-[#081a460c] flex flex-col p-[10px] items-stretch justify-between gap-[12px] mt-[14px] rounded-[4px] sm:flex-row sm:items-center sm:gap-[14px]">
+                <div className="flex min-w-0 gap-1.5 items-start sm:items-center">
+                  <AlertCircle size={18} className="text-[#081A46] mt-0.5 shrink-0 sm:mt-0" />
+                  <span className="text-[13px] sm:text-[14px] font-[700] text-[#081A46] leading-5">
                     Select HSM to get the applied keys
                   </span>
                 </div>
                 
-                <div className="relative h-fit w-fit">
-                  <div className="flex border cursor-pointer border-[#323232] p-[10px] py-1 rounded-[5px] text-[#323232] items-center justify-between min-w-[100px] gap-[10px] bg-gray-50 text-[14px] font-[600]">
+                <div className="relative h-fit w-full sm:w-fit">
+                  <div className="flex border cursor-pointer border-[#323232] p-[10px] py-2 sm:py-1 rounded-[5px] text-[#323232] items-center justify-between w-full sm:min-w-[100px] gap-[10px] bg-gray-50 text-[14px] font-[600]">
                     {hsmCode || "---"}
                     <ChevronDown size={16} className="text-[#323232] min-w-[16px]" />
                   </div>
@@ -310,7 +310,7 @@ export const UpdateKeysForm = ({ programId, keys, onCancel, onSuccess }: UpdateK
               </div>
 
               {/* Keys Grid */}
-              <div className="grid grid-cols-12 gap-x-[20px] gap-[16px] border border-[#E5E7EB] p-[20px] mt-[14px] rounded-[4px]">
+              <div className="grid grid-cols-12 gap-x-[20px] gap-[16px] border border-[#E5E7EB] p-[14px] sm:p-[20px] mt-[14px] rounded-[4px]">
                 <div className="sm:col-span-6 col-span-12">
                   <KeySelectField
                     label="MKAC"
@@ -365,13 +365,13 @@ export const UpdateKeysForm = ({ programId, keys, onCancel, onSuccess }: UpdateK
             </div>
 
             {/* Submit Button */}
-            <div className="w-full flex justify-end mt-[40px] mr-1">
+            <div className="w-full flex justify-end mt-[20px] sm:mt-[40px] sm:mr-1">
               <div className="sm:max-w-[300px] w-full">
                 <button
                   type="button"
                   disabled={loading}
                   onClick={updateProgramKeys}
-                  className="w-full bg-[#081A46]  text-white h-[46px] rounded-[6px] font-[500] text-[14px] transition-all  flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full bg-[#081A46] text-white h-[46px] rounded-[6px] font-[500] text-[14px] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70"
                 >
                   {loading && <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
                   Update Card Program Keys
@@ -410,20 +410,20 @@ function KeySelectField({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full h-[44px] border ${
+        className={`w-full h-[44px] min-w-0 border ${
           error ? "border-red-500" : "border-[#D1D5DB]"
-        } rounded-[6px] bg-white px-4 flex items-center justify-between text-[14px] text-[#374151] cursor-pointer transition-colors hover:border-gray-400`}
+        } rounded-[6px] bg-white px-3 sm:px-4 flex items-center justify-between gap-2 text-[14px] text-[#374151] cursor-pointer transition-colors hover:border-gray-400`}
       >
-        <span className={value?.name ? "text-[#374151] font-[500]" : "text-[#9CA3AF]"}>
+        <span className={`${value?.name ? "text-[#374151] font-[500]" : "text-[#9CA3AF]"} min-w-0 truncate text-left`}>
           {value?.name || placeholder}
         </span>
-        <ChevronDown size={16} className={`text-[#374151] transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <ChevronDown size={16} className={`text-[#374151] shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 
       {isOpen && (
         <>
           <div className="fixed inset-0 z-[100]" onClick={() => setIsOpen(false)} />
-          <div className="absolute top-[calc(100%+4px)] left-0 bg-white border border-[#E5E7EB] rounded-[6px] shadow-lg z-[101] w-full overflow-hidden animate-in fade-in zoom-in-95 duration-100">
+          <div className="absolute top-[calc(100%+4px)] left-0 bg-white border border-[#E5E7EB] rounded-[6px] shadow-lg z-[101] w-full min-w-0 overflow-hidden animate-in fade-in zoom-in-95 duration-100">
             <div className="max-h-[200px] overflow-y-auto scrollbar-hidden">
               {options.length === 0 ? (
                 <div className="px-4 py-3 text-[13px] text-gray-500 italic">No keys available</div>
@@ -436,7 +436,7 @@ function KeySelectField({
                       onChange(opt);
                       setIsOpen(false);
                     }}
-                    className="w-full text-left px-4 py-3 hover:bg-[#F9FAFB] cursor-pointer text-[#374151] font-[500] text-[13px] border-b border-gray-50 last:border-0"
+                    className="w-full text-left px-4 py-3 hover:bg-[#F9FAFB] cursor-pointer text-[#374151] font-[500] text-[13px] border-b border-gray-50 last:border-0 truncate"
                   >
                     {opt.name}
                   </button>

@@ -2,12 +2,44 @@
 
 import { UserDropdown } from "@/components/layout/UserDropdown";
 import { GeneralService } from "@/lib/services/generalService";
+import { usePathname } from "next/navigation";
+import { navigation } from "@/components/navigation/navigation.config";
+
+const titleOverrides: Record<string, string> = {
+  "/cardcore/card-programs": "Card Programs",
+  "/cardcore/hsm": "HSM",
+  "/cloudcard/billing": "Billing Info",
+};
+
+const getRouteTitle = (pathname: string) => {
+  const workspace = pathname.includes("/cloudcard")
+    ? navigation.cloudcard
+    : navigation.cardcore;
+
+  const matchedItem = [...workspace.menu]
+    .sort((a, b) => b.path.length - a.path.length)
+    .find((item) => pathname === item.path || pathname.startsWith(`${item.path}/`));
+
+  if (matchedItem) return matchedItem.label;
+
+  const routeBase = pathname.split("/").filter(Boolean).slice(0, 2).join("/");
+  const basePath = `/${routeBase}`;
+  if (titleOverrides[basePath]) return titleOverrides[basePath];
+
+  const lastSegment = pathname.split("/").filter(Boolean).at(-1) || "dashboard";
+  return lastSegment
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
 export function Navbar({
   openMenu,
 }: {
   openMenu: () => void;
 }) {
+  const pathname = usePathname();
+  const title = getRouteTitle(pathname);
 
   const handleSignOut = () => {
     GeneralService.logout();
@@ -30,7 +62,7 @@ export function Navbar({
         {/* Title */}
         <div>
           <h1 className="text-[17px] sm:text-[18px] font-[600] text-[#111827] leading-none mt-1">
-            Dashboard
+            {title}
           </h1>
         </div>
       </div>

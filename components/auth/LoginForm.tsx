@@ -55,6 +55,7 @@ export function LoginForm() {
       if (typeof window !== "undefined") {
         sessionStorage.setItem("trackingId", (res as any).trackingKey || "");
         sessionStorage.setItem("otpMethod", method);
+        sessionStorage.setItem("pending2FASetup", String(!hasTotp));
       }
 
       // Brief delay to allow user to register the success status feedback animation

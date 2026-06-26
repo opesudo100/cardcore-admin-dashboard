@@ -144,7 +144,7 @@ export default function UsersPage() {
                     <tr key={user._id} className="hover:bg-slate-50/60 transition-colors">
                       <td className="py-4 pl-6 pr-4">
                         <div className="flex items-center gap-3 overflow-hidden">
-                          <div className="bg-[#EDEEFF] h-[37px] w-[47px] shrink-0 flex items-center justify-center text-[#4F46E5] font-semibold rounded-[4px]">
+                          <div className="bg-gray-200 h-[37px] w-[47px] shrink-0 flex items-center justify-center text-gray-600 font-semibold rounded-[4px]">
                             {getAcronym(user.name)}
                           </div>
                           <div className="flex min-w-0 flex-col truncate">
