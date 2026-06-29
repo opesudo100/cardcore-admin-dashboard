@@ -125,8 +125,8 @@ export default function InstitutionsPage() {
               <thead>
                 <tr className="border-b border-gray-100 text-[13px] font-semibold bg-gray-100">
                   <th className="py-4 pl-6 pr-4 font-bold text-[#4B5563]">Name</th>
-                  <th className="py-4 px-4 font-bold text-[#4B5563]">Type</th>
-                  <th className="py-4 px-4 font-bold text-[#4B5563]">Wallet ID</th>
+                  <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">Type</th>
+                  <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">Wallet ID</th>
                   <th className="py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right">Created At</th>
                 </tr>
               </thead>
@@ -151,8 +151,8 @@ export default function InstitutionsPage() {
                           </span>
                         </div>
                       </td>
-                      <td className="py-4 px-4 text-[#111827] font-medium capitalize">{inst.type || "-"}</td>
-                      <td className="py-4 px-4 text-[#111827] font-medium tracking-wide uppercase">{inst.walletId || "-"}</td>
+                      <td className="hidden sm:table-cell py-4 px-4 text-[#111827] font-medium capitalize">{inst.type || "-"}</td>
+                      <td className="hidden sm:table-cell py-4 px-4 text-[#111827] font-medium tracking-wide uppercase">{inst.walletId || "-"}</td>
                       <td className="py-4 pl-4 pr-6 text-gray-500 font-normal text-right whitespace-nowrap">
                         {moment(inst.createdAt).format('lll')}
                       </td>

@@ -52,18 +52,17 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     countdownIntervalRef.current = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          // Trigger logout exactly at 0
+          // Clear interval exactly at 0
           if (countdownIntervalRef.current) {
             clearInterval(countdownIntervalRef.current);
             countdownIntervalRef.current = null;
           }
-          handleLogout();
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
-  }, [handleLogout]);
+  }, []);
 
   const lastResetRef = useRef<number>(0);
   const resetTimer = useCallback(() => {
@@ -91,6 +90,13 @@ export function AuthGuard({ children }: { children: React.ReactNode }) {
     setShowTimeoutModal(false);
     resetTimer();
   };
+
+  // Trigger logout when countdown reaches 0
+  useEffect(() => {
+    if (showTimeoutModal && countdown === 0) {
+      handleLogout();
+    }
+  }, [countdown, showTimeoutModal, handleLogout]);
 
   useEffect(() => {
     const token = GeneralService.getStorageData("secret");

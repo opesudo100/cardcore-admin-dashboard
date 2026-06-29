@@ -17,6 +17,7 @@ const iconPaths: Record<IconName, string> = {
   arrow: "/assets/icons/round-arrow.svg",
   menu: "/assets/icons/menu.svg",
   eye: "/assets/icons/eye.svg",
+  "eye-off": "/assets/icons/eye-off.svg",
   back: "/assets/icons/round-arrow.svg",
 };
 

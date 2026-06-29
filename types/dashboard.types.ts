@@ -14,6 +14,7 @@ export type IconName =
   | "arrow"
   | "menu"
   | "eye"
+  | "eye-off"
   | "back";
 
 export type WorkspaceKey = "cardcore" | "cloudcard";

@@ -289,7 +289,8 @@ export const BasicInfoTab = ({ user: initialUser }: BasicInfoTabProps) => {
             </button>
           </div>
           <div className="p-2 bg-gray-50 rounded-lg border border-gray-100 self-center sm:self-auto">
-            <Image src="/assets/images/qr.png" alt="QR" width={70} height={70} />
+            <Image src="/assets/images/qr.png" alt="QR" width={70} height={70}
+            className="!h-[100px] !w-[100px]" />
           </div>
         </div>
       </div>

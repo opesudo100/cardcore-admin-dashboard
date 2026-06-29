@@ -136,7 +136,7 @@ export default function UsersPage() {
                   <tr className="border-b border-gray-100 text-[13px] font-semibold bg-gray-100">
                     <th className="py-4 pl-6 pr-4 font-bold text-[#4B5563]">Name</th>
                     <th className="py-4 px-4 font-bold text-[#4B5563]">Role</th>
-                    <th className="py-4 pl-4 pr-6 font-bold text-[#4B5563] text-center">Status</th>
+                    <th className="hidden sm:table-cell py-4 pl-4 pr-6 font-bold text-[#4B5563] text-center">Status</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100 text-[14px]">
@@ -161,7 +161,7 @@ export default function UsersPage() {
                         </div>
                       </td>
                       <td className="py-4 px-4 text-[#111827] font-medium capitalize">{user.role}</td>
-                      <td className="py-4 pl-4 pr-6 text-center">
+                      <td className="hidden sm:table-cell py-4 pl-4 pr-6 text-center">
                         {user.emailAddressVerified ? (
                           <span className="text-[14px] font-medium text-[#374151]">Active</span>
                         ) : (

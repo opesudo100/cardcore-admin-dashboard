@@ -203,10 +203,10 @@ export default function BillingPage() {
                           <th className="py-4 pl-6 pr-4 font-bold text-[#4B5563]">
                             Date
                           </th>
-                          <th className="py-4 px-4 font-bold text-[#4B5563]">
+                          <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">
                             Client
                           </th>
-                          <th className="py-4 px-4 font-bold text-[#4B5563]">
+                          <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">
                             Amount
                           </th>
                           <th className="py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right">
@@ -230,12 +230,12 @@ export default function BillingPage() {
                                   {formatDate(invoice.createdAt)}
                                 </span>
                               </td>
-                              <td className="py-4 px-4">
+                              <td className="hidden sm:table-cell py-4 px-4">
                                 <span className="truncate text-[13px] text-[#374151] font-medium">
                                   {invoice.client?.name || "N/A"}
                                 </span>
                               </td>
-                              <td className="py-4 px-4">
+                              <td className="hidden sm:table-cell py-4 px-4">
                                 <span className="text-[13px] text-[#374151] font-semibold">
                                   ₦ {formatAmount(invoice.amount)}
                                 </span>
@@ -245,8 +245,8 @@ export default function BillingPage() {
                                   className={`inline-flex rounded-full px-3 py-0.5 text-[10px] font-[700] uppercase tracking-wide ${
                                     invoice.status?.toLowerCase() ===
                                     "completed"
-                                      ? "bg-[#10B981] text-white"
-                                      : "bg-[#F59E0B] text-white"
+                                      ? "bg-[#00D126] text-white"
+                                      : "bg-[#F7B036] text-white"
                                   }`}
                                 >
                                   {invoice.status}

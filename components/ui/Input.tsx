@@ -71,7 +71,7 @@ export const Input = ({
         onBlur={handleBlur}
         disabled={disabled}
         maxLength={max}
-        className={`border text-[var(--grey-text)] rounded-[8px] h-[35px] outline-none focus:outline-none focus:ring-2 focus:ring-[#bbcdfc86] p-[12px] transition-all ${
+        className={`border text-[var(--grey-text)] rounded-[8px] h-[45px] outline-none focus:outline-none focus:ring-2 focus:ring-[#bbcdfc86] p-[12px] transition-all ${
           error
             ? "border-[#ff00005e] bg-[#ff000003]"
             : "border-[#C7C7C7] focus:border-none"

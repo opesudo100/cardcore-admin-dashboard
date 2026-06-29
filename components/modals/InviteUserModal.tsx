@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, ChevronDown, Check } from "lucide-react";
 import Image from "next/image";
 import { AuthService } from "@/lib/services/authService";
+import LocationService, { ICountry } from "@/lib/services/locationService";
 import toast from "react-hot-toast";
 
 interface InviteUserModalProps {
@@ -88,6 +89,36 @@ export const InviteUserModal = ({ isOpen, onClose, user, mode = "create" }: Invi
     phoneNumber: stripNigeriaCode(user?.phoneNumber || ""),
   });
 
+  const [countries, setCountries] = useState<ICountry[]>([]);
+  const [countryDialCode, setCountryDialCode] = useState("+234");
+  const [countryFlag, setCountryFlag] = useState("🇳🇬");
+
+  useEffect(() => {
+    LocationService.getCountries().then((list) => {
+      setCountries(list);
+      if (isEdit && user?.phoneNumber) {
+        const sorted = [...list].sort((a, b) => b.phonecode.length - a.phonecode.length);
+        const cleanNum = user.phoneNumber.replace(/\s+/g, "");
+        for (const c of sorted) {
+          const code = c.phonecode.replace("+", "");
+          const matchPlus = `+${code}`;
+          if (cleanNum.startsWith(matchPlus)) {
+            setCountryDialCode(matchPlus);
+            setCountryFlag(c.flag);
+            setFormData((prev) => ({ ...prev, phoneNumber: cleanNum.substring(matchPlus.length) }));
+            return;
+          }
+          if (cleanNum.startsWith(code)) {
+            setCountryDialCode(matchPlus);
+            setCountryFlag(c.flag);
+            setFormData((prev) => ({ ...prev, phoneNumber: cleanNum.substring(code.length) }));
+            return;
+          }
+        }
+      }
+    });
+  }, [isEdit, user?.phoneNumber]);
+
   if (!isOpen) return null;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,7 +173,7 @@ export const InviteUserModal = ({ isOpen, onClose, user, mode = "create" }: Invi
         lastName: formData.lastName,
         otherNames: formData.middleName,
         emailAddress: formData.emailAddress,
-        phoneNumber: "+234" + formData.phoneNumber.replace(/\s+/g, ""),
+        phoneNumber: countryDialCode + formData.phoneNumber.replace(/\s+/g, ""),
         roles: [
           {
             role: role.replaceAll(" ", "_"),
@@ -252,9 +283,31 @@ export const InviteUserModal = ({ isOpen, onClose, user, mode = "create" }: Invi
           <div className="flex flex-col gap-1.5">
             <label className="text-[13px] font-[500] text-[#374151]">Phone number</label>
             <div className="flex h-[40px] border border-[#D1D5DB] rounded-[4px] overflow-hidden focus-within:border-[#091D4A]">
-              <div className="flex items-center gap-1.5 px-3 border-r border-[#D1D5DB] shrink-0 bg-white">
-                <span className="text-[16px] leading-none">🇳🇬</span>
-                <span className="text-[12px] text-[#374151] font-[500]">+234</span>
+              <div className="relative flex items-center gap-1.5 px-3 border-r border-[#D1D5DB] shrink-0 bg-white hover:bg-gray-50 transition-colors">
+                <span className="text-[16px] leading-none">{countryFlag}</span>
+                <span className="text-[12px] text-[#374151] font-[500]">{countryDialCode}</span>
+                <ChevronDown size={12} className="text-[#6B7280]" />
+                <select
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  value={`${countryDialCode}-${countryFlag}`}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    const dashIdx = val.indexOf("-");
+                    const code = val.slice(0, dashIdx);
+                    const flag = val.slice(dashIdx + 1);
+                    setCountryDialCode(code);
+                    setCountryFlag(flag);
+                  }}
+                >
+                  {countries.map((c, index) => {
+                    const dial = c.phonecode.startsWith("+") ? c.phonecode : `+${c.phonecode}`;
+                    return (
+                      <option key={`${c.isoCode}-${index}`} value={`${dial}-${c.flag}`}>
+                        {dial} {c.flag} {c.name}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
               <input
                 name="phoneNumber"

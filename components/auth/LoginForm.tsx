@@ -4,6 +4,7 @@ import { FormEvent, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Brand } from "@/components/ui/Brand";
 import { Icon } from "@/components/ui/Icon";
+import { Input } from "@/components/ui/Input";
 import { LoadingContent } from "@/components/ui/LoadingSpinner";
 import { AuthService } from "@/lib/services/authService";
 import { GeneralService } from "@/lib/services/generalService";
@@ -42,7 +43,7 @@ export function LoginForm() {
         return;
       }
 
-      // Display native success confirmation feedback toast
+     
       toast.success("Sign in successful!");
 
       // Find OTP method
@@ -183,30 +184,12 @@ export function LoginForm() {
               Email
             </label>
 
-            <input
-              autoComplete="email"
-              inputMode="email"
+            <Input
               placeholder="example@mail.com"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={setEmail}
               disabled={loading}
-              className="
-                w-full
-                h-[40px]
-                rounded-[8px]
-                border
-                border-[#D7DBE7]
-                bg-white
-                px-4
-                text-[15px]
-                placeholder:text-[12px]
-                outline-none
-                transition-all
-                placeholder:text-[#9CA3AF]
-                disabled:bg-gray-50
-                disabled:text-gray-400
-              "
             />
           </div>
 
@@ -223,30 +206,12 @@ export function LoginForm() {
             </label>
 
             <div className="relative">
-              <input
-                autoComplete="current-password"
+              <Input
                 placeholder="************"
-                type={showPassword ? "text" : "password"}
+                secrete={!showPassword}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={setPassword}
                 disabled={loading}
-                className="
-                  w-full
-                  h-[40px]
-                  rounded-[8px]
-                  border
-                  border-[#D7DBE7]
-                  bg-white
-                  px-4
-                  pr-12
-                  text-[15px]
-                  placeholder:text-[11px]
-                  outline-none
-                  transition-all
-                  placeholder:text-[#9CA3AF]
-                  disabled:bg-gray-50
-                  disabled:text-gray-400
-                "
               />
 
               <button
@@ -256,13 +221,14 @@ export function LoginForm() {
                 className="
                   absolute
                   right-4
-                  top-1/2
+                  top-[17.5px]
                   -translate-y-1/2
                   text-[#686D78]
                   w-[18px] h-[18px]
                 " 
-              >
-                <Icon name="eye" />
+              > <div className="w-4 h-4 "> 
+                <Icon name={showPassword ? "eye-off" : "eye"} />
+                </div>
               </button>
             </div>
           </div>

@@ -114,8 +114,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             {/* Spacer */}
             <div className="flex-1" />
 
-            {/* Switch Card Footer */}
-            {/* Redesigned to feature the minimalist layout in the screenshot: Left Icon, Text, Right Arrow */}
+        
             <button
                 onClick={() => {
                     localStorage.setItem("app", isCloudCard ? "core" : "cloud");
@@ -137,26 +136,26 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             >
                 <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-3">
-                        {/* Custom icon placeholder for the "Cloud Card / Card Core" dynamic toggle */}
+                    
                         <div className="text-[#3A3F4B]">
                             <Image
-                                src="/assets/icons/mobile.svg" // Replace with your card stack icon
+                                src="/assets/icons/mobile.svg" 
                                 alt="workspace"
                                 width={22}
                                 height={22}
                             />
                         </div>
 
-                        {/* Label styling matches screenshot text style */}
+                
                         <span className="text-[14px] sm:text-[16px] font-medium text-[#555964] tracking-wide truncate">
                             {workspace.switchLabel}
                         </span>
                     </div>
 
-                    {/* Right side arrow icon (matching the |→ in screenshot) */}
+                  
                     <div className="text-[#717784]">
                         <Image
-                            src="/assets/icons/switch.svg" // Replace with your logout/arrow icon
+                            src="/assets/icons/switch.svg" 
                             alt="switch arrow"
                             width={18}
                             height={18}
