@@ -45,11 +45,14 @@ export default function UsersPage() {
         page,
       });
       console.log(res);
-      setUsers(res.data);
-      setTotalPages(res.pagination.totalPages);
-      setTotal(res.pagination.total);
+      setUsers(Array.isArray(res.data) ? res.data : []);
+      setTotalPages(res.pagination?.totalPages ?? 1);
+      setTotal(res.pagination?.total ?? 0);
     } catch (err) {
       console.log(err);
+      setUsers([]);
+      setTotalPages(1);
+      setTotal(0);
     } finally {
       setLoadingData(false);
     }
@@ -170,7 +173,10 @@ export default function UsersPage() {
                             className="inline-flex items-center gap-1 text-[14px] hover:bg-slate-200 px-2 py-1 rounded transition-colors cursor-pointer"
                             disabled={loadingResend === user._id}
                           >
-                            <RefreshCw size={16} className={loadingResend === user._id ? "animate-spin" : ""} />
+                            <RefreshCw
+                              size={16}
+                              className={loadingResend === user._id ? "animate-spin" : ""}
+                            />
                             Resend Invite
                           </button>
                         )}

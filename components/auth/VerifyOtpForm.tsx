@@ -24,7 +24,7 @@ export function VerifyOtpForm() {
 
     // 1. If already fully authed, take them away to dashboard
     if (token && typeof token === "string" && token.trim() !== "") {
-      router.replace("/cardcore/dashboard");
+      router.replace("/dashboard");
       return;
     }
 
@@ -145,7 +145,7 @@ export function VerifyOtpForm() {
 
       // Delay transition briefly so user registers the success visual state feedback
       setTimeout(() => {
-        router.push("/cardcore/dashboard");
+        router.push("/dashboard");
       }, 600);
 
     } catch (err: any) {

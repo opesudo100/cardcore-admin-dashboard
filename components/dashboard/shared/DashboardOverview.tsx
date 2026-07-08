@@ -1,13 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { CardCoreDashboardOverview } from "@/components/dashboard/cardcore/DashboardOverview";
 import { CloudCardDashboardOverview } from "@/components/dashboard/cloudcard/DashboardOverview";
+import { useWorkspace } from "@/context/WorkspaceContext";
 
 export function DashboardOverview() {
-  const pathname = usePathname();
-
-  const isCloudCard = pathname.includes("/cloudcard");
+  const { isCloudCard } = useWorkspace();
 
   return isCloudCard ? (
     <CloudCardDashboardOverview />

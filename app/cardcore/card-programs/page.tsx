@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { TablePagination } from "@/components/layout/TablePagination";
@@ -20,6 +21,7 @@ const SCHEME_ICONS: Record<string, string> = {
 };
 
 export default function CardProgramsPage() {
+  const router = useRouter();
   const [loadingData, setLoadingData] = useState(false);
   const [cardPrograms, setCardPrograms] = useState<any[]>([]);
   
@@ -164,7 +166,7 @@ export default function CardProgramsPage() {
                 cardPrograms.map((prog, index) => (
                   <div
                     key={prog.id || prog._id || `prog-${index}`}
-                    onClick={() => setSelectedProgram(prog)}
+                    onClick={() => router.push(`/dashboard/card-programs/${prog.id || prog._id}`)}
                     className="cardcore-table-row flex items-center justify-between gap-3 px-3 cursor-pointer hover:bg-gray-50 transition-colors bg-white sm:px-4"
                   >
                     <div className="min-w-0 flex-1 flex items-center gap-2 sm:w-[35%] sm:flex-none sm:gap-3">

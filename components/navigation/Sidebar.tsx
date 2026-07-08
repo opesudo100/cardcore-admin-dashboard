@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { navigation } from "./navigation.config";
+import { useWorkspace } from "@/context/WorkspaceContext";
 
 type SidebarProps = {
     isOpen?: boolean;
@@ -14,20 +15,11 @@ type SidebarProps = {
 export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
-
-    const isCloudCard = pathname.includes("/cloudcard");
+    const { toggleWorkspace, isCloudCard } = useWorkspace();
 
     const workspace = isCloudCard
         ? navigation.cloudcard
         : navigation.cardcore;
-
-    const switchTo = isCloudCard
-        ? "/cardcore/dashboard"
-        : "/cloudcard/dashboard";
-
-    useEffect(() => {
-        localStorage.setItem("app", isCloudCard ? "cloud" : "core");
-    }, [isCloudCard]);
 
     return (
         <>
@@ -69,8 +61,9 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             <div className="flex flex-col gap-1 mt-8 overflow-y-auto pr-1">
                 {workspace.menu.map((item) => {
                     const active =
-                        pathname === item.path ||
-                        pathname.startsWith(`${item.path}/`);
+                        item.path === "/dashboard"
+                            ? pathname === "/dashboard"
+                            : pathname === item.path || pathname.startsWith(`${item.path}/`);
 
                     return (
                         <Link
@@ -117,9 +110,9 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         
             <button
                 onClick={() => {
-                    localStorage.setItem("app", isCloudCard ? "core" : "cloud");
+                    toggleWorkspace();
                     onClose?.();
-                    router.push(switchTo);
+                    router.push("/dashboard");
                 }}
                 className="
                     w-full

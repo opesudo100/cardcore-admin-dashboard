@@ -136,7 +136,7 @@ export default function CardsPage() {
                 {cards.map((card, index) => (
                   <tr
                     key={card.id || card._id || `card-${index}`}
-                    onClick={() => router.push(`/cardcore/cards/${card.id || card._id}`)}
+                    onClick={() => router.push(`/dashboard/cards/${card.id || card._id}`)}
                     className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors bg-white"
                   >
                     <td className="py-3 pl-3 pr-2 sm:py-4 sm:pl-6 sm:pr-4">

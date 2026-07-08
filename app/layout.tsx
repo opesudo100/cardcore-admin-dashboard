@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { WorkspaceProvider } from "@/context/WorkspaceContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,9 +30,11 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {/* Global configuration mount for application feedback toast alerts */}
-        <Toaster position="top-right" reverseOrder={false} />
-        {children}
+        <WorkspaceProvider>
+          {/* Global configuration mount for application feedback toast alerts */}
+          <Toaster position="top-right" reverseOrder={false} />
+          {children}
+        </WorkspaceProvider>
       </body>
     </html>
   );

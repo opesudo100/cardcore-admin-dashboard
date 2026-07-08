@@ -73,7 +73,7 @@ export default function CardDetailsPage() {
     <DashboardLayout>
       <div className="w-full min-w-0 px-0 pt-[10px] pb-[40px] sm:px-[8px]">
         <Link
-          href="/cardcore/cards"
+          href="/dashboard/cards"
           className="inline-flex items-center gap-2 text-[15px] text-[#4B5563]  transition-colors"
         >
           <ChevronLeft size={15} strokeWidth={1.8} />

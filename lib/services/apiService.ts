@@ -24,11 +24,7 @@ export class ApiService {
     
     let app: string | null = 'core';
     if (!forceCore && !isAuth && typeof window !== 'undefined') {
-      app = window.location.pathname.includes('/cloudcard')
-        ? 'cloud'
-        : window.location.pathname.includes('/cardcore')
-          ? 'core'
-          : localStorage.getItem('app');
+      app = localStorage.getItem('app') || 'core';
     }
     
     let baseUrl = (!app || app === 'core' || isAuth) 

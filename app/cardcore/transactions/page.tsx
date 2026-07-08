@@ -251,7 +251,7 @@ export default function TransactionsPage() {
                 return (
                   <div
                     key={item.id || item._id || `tx-${index}`}
-                    onClick={() => router.push(`/cardcore/transactions/${item._id || item.id || item.rrn}`)}
+                    onClick={() => router.push(`/dashboard/transactions/${item._id || item.id || item.rrn}`)}
                     className={`cardcore-table-row flex w-full items-center justify-between gap-3 border-b border-[#E5E7EB] hover:bg-[#FAFAFA] cursor-pointer ${style.border}`}
                   >
                     <div className="min-w-0 flex-1 flex flex-col justify-center pl-3 sm:w-[30%] sm:flex-none sm:px-5">

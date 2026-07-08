@@ -4,17 +4,16 @@ import { UserDropdown } from "@/components/layout/UserDropdown";
 import { GeneralService } from "@/lib/services/generalService";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/components/navigation/navigation.config";
+import { useWorkspace } from "@/context/WorkspaceContext";
 
 const titleOverrides: Record<string, string> = {
-  "/cardcore/card-programs": "Card Programs",
-  "/cardcore/hsm": "HSM",
-  "/cloudcard/billing": "Billing Info",
+  "/dashboard/card-programs": "Card Programs",
+  "/dashboard/hsm": "HSM",
+  "/dashboard/billing-info": "Billing Info",
 };
 
-const getRouteTitle = (pathname: string) => {
-  const workspace = pathname.includes("/cloudcard")
-    ? navigation.cloudcard
-    : navigation.cardcore;
+const getRouteTitle = (pathname: string, isCloudCard: boolean) => {
+  const workspace = isCloudCard ? navigation.cloudcard : navigation.cardcore;
 
   const matchedItem = [...workspace.menu]
     .sort((a, b) => b.path.length - a.path.length)
@@ -39,7 +38,8 @@ export function Navbar({
   openMenu: () => void;
 }) {
   const pathname = usePathname();
-  const title = getRouteTitle(pathname);
+  const { isCloudCard } = useWorkspace();
+  const title = getRouteTitle(pathname, isCloudCard);
 
   const handleSignOut = () => {
     GeneralService.logout();

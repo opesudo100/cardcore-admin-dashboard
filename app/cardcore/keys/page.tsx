@@ -141,7 +141,7 @@ export default function KeysPage() {
                 <button
                   key={item.id || item._id || `key-${index}`}
                   type="button"
-                  onClick={() => router.push(`/cardcore/keys/${item.id || item._id}`)}
+                  onClick={() => router.push(`/dashboard/keys/${item.id || item._id}`)}
                   className="cardcore-table-row flex min-h-[70px] w-full items-center justify-between gap-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer px-3 text-[13px] text-left transition-colors sm:px-5"
                 >
                   <div className="min-w-0 flex-1 font-semibold text-[#091D4A] sm:w-[20%] sm:flex-none">

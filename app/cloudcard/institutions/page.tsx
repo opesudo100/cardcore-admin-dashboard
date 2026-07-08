@@ -137,7 +137,7 @@ export default function InstitutionsPage() {
                   return (
                     <tr
                       key={institutionId}
-                      onClick={() => institutionId && router.push(`/cloudcard/institutions/${institutionId}`)}
+                      onClick={() => institutionId && router.push(`/dashboard/institutions/${institutionId}`)}
                       className="hover:bg-slate-50/60 cursor-pointer transition-colors"
                     >
                       <td className="py-4 pl-6 pr-4 flex items-center gap-3">

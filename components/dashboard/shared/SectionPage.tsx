@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useWorkspace } from "@/context/WorkspaceContext";
 import type { IconName } from "@/types/dashboard.types";
 import { DashboardCard } from "@/components/dashboard/shared/DashboardCard";
 import { Icon } from "@/components/ui/Icon";
@@ -268,9 +269,7 @@ export function SectionPage({
   icon?: IconName;
 }) {
   const pathname = usePathname();
-
-  const isCloudCard =
-    pathname.includes("/cloudcard");
+  const { isCloudCard } = useWorkspace();
 
   const workspaceKey = isCloudCard
     ? "cloudcard"
@@ -280,8 +279,13 @@ export function SectionPage({
     ? "CloudCard"
     : "CardCore";
 
+  // Routes now live under /dashboard/<section> — extract the section after "dashboard"
+  const segments = pathname.split("/").filter(Boolean);
+  const dashIdx = segments.indexOf("dashboard");
   const activeSection =
-    pathname.split("/")[2] || "dashboard";
+    dashIdx !== -1 && segments[dashIdx + 1]
+      ? segments[dashIdx + 1]
+      : "dashboard";
 
   const variant =
     pageVariants[activeSection]?.[

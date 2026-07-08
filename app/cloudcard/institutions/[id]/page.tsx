@@ -48,7 +48,7 @@ export default function InstitutionDetailsPage() {
 
   const getInstitution = useCallback(async () => {
     if (!id) {
-      router.push("/cloudcard/institutions");
+      router.push("/dashboard/institutions");
       return;
     }
     setLoading(true);
@@ -174,7 +174,7 @@ export default function InstitutionDetailsPage() {
           <div className="flex h-96 flex-col items-center justify-center p-6 text-center border rounded-[8px] bg-white">
             <p className="text-[16px] font-semibold text-[#111827]">{error || "Institution not found"}</p>
             <button
-              onClick={() => router.push("/cloudcard/institutions")}
+              onClick={() => router.push("/dashboard/institutions")}
               className="mt-4 text-sm text-[#4F46E5] hover:underline font-semibold"
             >
               Return to Institutions

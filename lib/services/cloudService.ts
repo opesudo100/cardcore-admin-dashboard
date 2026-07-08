@@ -13,14 +13,8 @@ const CLOUD_CARD_API_URL =
 export const getUrl = (): string => {
   if (typeof window === 'undefined') return CLOUD_CARD_API_URL; // Default for SSR
   
-  const pathname = window.location.pathname;
-  const app = pathname.includes('/cloudcard')
-    ? 'cloud'
-    : pathname.includes('/cardcore')
-      ? 'core'
-      : localStorage.getItem('app');
-
-  return !app || app === 'core' ? API_URL : CLOUD_CARD_API_URL;
+  const app = localStorage.getItem('app') || 'core';
+  return app === 'core' ? API_URL : CLOUD_CARD_API_URL;
 };
 
 // 3. Dynamic base URL wrapper for general endpoints

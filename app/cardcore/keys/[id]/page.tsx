@@ -68,7 +68,7 @@ export default function KeyDetailsPage() {
       const res = await KeyService.deleteKey(keyId);
       if (!res.failed) {
         toast.success("Key has been deleted successfully");
-        router.push("/cardcore/keys");
+        router.push("/dashboard/keys");
       } else {
         toast.error(res.message || "Failed to delete key");
       }
@@ -101,7 +101,7 @@ export default function KeyDetailsPage() {
         <div className="flex flex-col items-center justify-center h-[400px]">
           <h2 className="text-xl font-bold text-gray-700">Key Not Found</h2>
           <button 
-            onClick={() => router.push("/cardcore/keys")}
+            onClick={() => router.push("/dashboard/keys")}
             className="mt-4 text-blue-600 hover:underline"
           >
             Back to Keys
@@ -127,7 +127,7 @@ export default function KeyDetailsPage() {
     <DashboardLayout>
       <div className="max-w-3xl animate-in fade-in slide-in-from-bottom-4 duration-300">
         <button 
-          onClick={() => router.push("/cardcore/keys")} 
+          onClick={() => router.push("/dashboard/keys")} 
           className="text-sm font-semibold text-gray-500 mb-8 flex flex-row gap-2 items-center hover:text-[#09245A] transition-colors group"
         >
           <div className="p-1 rounded-full group-hover:bg-gray-100 transition-colors">

@@ -1,21 +1,20 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { Eye, EyeOff, CheckCircle2, XCircle } from "lucide-react";
 import { TwoFactorAuthModal } from "@/components/modals/TwoFactorAuthModal";
 import { AuthService } from "@/lib/services/authService";
 import { GeneralService } from "@/lib/services/generalService";
 import toast from "react-hot-toast";
+import { useWorkspace } from "@/context/WorkspaceContext";
 
 type BasicInfoTabProps = {
   user?: Record<string, any>;
 };
 
 export const BasicInfoTab = ({ user: initialUser }: BasicInfoTabProps) => {
-  const pathname = usePathname();
-  const isCloudCard = pathname.includes("/cloudcard");
+  const { isCloudCard } = useWorkspace();
   
   const [user, setUser] = useState<any>(initialUser || null);
   const [loading, setLoading] = useState(!initialUser);
