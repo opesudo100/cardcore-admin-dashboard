@@ -142,65 +142,70 @@ export default function CardProgramsPage() {
             onFilterApply={applyFilters}
           />
 
-          <div className="responsive-table rounded-sm">
-            <div className="cardcore-table-header flex items-center justify-between px-3 sm:px-4">
-              <div className="min-w-0 flex-1 sm:w-[35%] sm:flex-none">Institution</div>
-              <div className="hidden sm:block sm:w-[30%]">Name</div>
-              <div className="hidden sm:block sm:w-[20%]">Type</div>
-              <div className="hidden lg:block lg:w-[20%]">Service Code</div>
-              <div className="w-[86px] shrink-0 text-right sm:w-[15%]">Scheme</div>
-            </div>
-
-            <div className="divide-y divide-gray-100 min-h-[400px]">
-              {loadingData ? (
-                <div className="w-full h-[400px] flex items-center justify-center bg-white">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
-                </div>
-              ) : cardPrograms.length === 0 ? (
-                <div className="w-full h-[400px] flex flex-col items-center justify-center text-gray-500 bg-white">
-                  <p className="text-lg font-medium">No card programs found</p>
-                  <p className="text-sm">Try adjusting your filters or search query</p>
-                </div>
-              ) : (
-                cardPrograms.map((prog, index) => (
-                  <div
-                    key={prog.id || prog._id || `prog-${index}`}
-                    onClick={() => router.push(`/dashboard/card-programs/${prog.id || prog._id}`)}
-                    className="cardcore-table-row flex items-center justify-between gap-3 px-3 cursor-pointer hover:bg-gray-50 transition-colors bg-white sm:px-4"
-                  >
-                    <div className="min-w-0 flex-1 flex items-center gap-2 sm:w-[35%] sm:flex-none sm:gap-3">
-                      <div className="w-[37px] h-[37px] shrink-0 bg-[#EDEEFF] text-[14px] font-bold rounded-[4px] flex items-center justify-center">
-                        {getAcronym(prog.institution?.name || "")}
-                      </div>
-                      <div className="min-w-0 flex flex-col">
-                        <span className="text-[14px] font-medium truncate">{prog.institution?.name || "N/A"}</span>
-                        <span className="text-[10px] uppercase text-gray-500 sm:hidden truncate">
-                          {prog.name || "N/A"} {prog.type ? `• ${prog.type}` : ""}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="w-[30%] hidden sm:block text-[14px] truncate">{prog.name}</div>
-                    <div className="w-[20%] hidden sm:block text-[14px] uppercase">{prog.type}</div>
-                    <div className="w-[20%] hidden lg:block text-[14px]">{prog.serviceCode}</div>
-
-                    <div className="w-[86px] shrink-0 flex justify-end sm:w-[15%]">
-                      {SCHEME_ICONS[prog.scheme?.toLowerCase()] ? (
-                        <Image
-                          src={SCHEME_ICONS[prog.scheme.toLowerCase()]}
-                          alt={prog.scheme}
-                          width={50}
-                          height={50}
-                          className="h-[42px] w-[50px] object-contain sm:h-[50px]"
-                        />
-                      ) : (
-                        <span className="text-[12px] font-bold">{prog.scheme?.toUpperCase() || "N/A"}</span>
-                      )}
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
+          <div className="cardcore-table-container min-h-[400px]">
+            {loadingData ? (
+              <div className="w-full h-[400px] flex items-center justify-center bg-white">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
+              </div>
+            ) : cardPrograms.length === 0 ? (
+              <div className="w-full h-[400px] flex flex-col items-center justify-center text-gray-500 bg-white">
+                <p className="text-lg font-medium">No card programs found</p>
+                <p className="text-sm">Try adjusting your filters or search query</p>
+              </div>
+            ) : (
+              <table className="w-full table-fixed text-left border-collapse">
+                <thead>
+                  <tr className="cardcore-table-header">
+                    <th className="w-[60%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[35%] lg:w-[25%] sm:pl-6 sm:pr-4">Institution</th>
+                    <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[30%] lg:w-[25%]">Name</th>
+                    <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[20%] lg:w-[15%]">Type</th>
+                    <th className="hidden py-4 px-4 font-bold text-[#4B5563] lg:table-cell lg:w-[20%]">Service Code</th>
+                    <th className="w-[40%] py-4 pl-2 pr-6 font-bold text-[#4B5563] text-right sm:w-[15%] lg:w-[15%] whitespace-nowrap">Scheme</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-[14px]">
+                  {cardPrograms.map((prog, index) => (
+                    <tr
+                      key={prog.id || prog._id || `prog-${index}`}
+                      onClick={() => router.push(`/dashboard/card-programs/${prog.id || prog._id}`)}
+                      className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors bg-white"
+                    >
+                      <td className="py-3 pl-3 pr-2 sm:py-4 sm:pl-6 sm:pr-4">
+                        <div className="min-w-0 flex items-center gap-2 sm:gap-3">
+                          <div className="w-[37px] h-[37px] shrink-0 bg-[#EDEEFF] text-[14px] font-bold rounded-[4px] flex items-center justify-center">
+                            {getAcronym(prog.institution?.name || "")}
+                          </div>
+                          <div className="min-w-0 flex flex-col">
+                            <span className="text-[14px] font-medium truncate">{prog.institution?.name || "N/A"}</span>
+                            <span className="text-[10px] uppercase text-gray-500 sm:hidden truncate">
+                              {prog.name || "N/A"} {prog.type ? `• ${prog.type}` : ""}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="hidden py-4 px-4 sm:table-cell truncate">{prog.name}</td>
+                      <td className="hidden py-4 px-4 sm:table-cell uppercase">{prog.type}</td>
+                      <td className="hidden py-4 px-4 lg:table-cell">{prog.serviceCode}</td>
+                      <td className="py-3 pl-2 pr-6 text-right sm:py-4">
+                        <div className="flex justify-end">
+                          {SCHEME_ICONS[prog.scheme?.toLowerCase()] ? (
+                            <Image
+                              src={SCHEME_ICONS[prog.scheme.toLowerCase()]}
+                              alt={prog.scheme}
+                              width={50}
+                              height={50}
+                              className="h-[42px] w-[50px] object-contain sm:h-[50px]"
+                            />
+                          ) : (
+                            <span className="text-[12px] font-bold">{prog.scheme?.toUpperCase() || "N/A"}</span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
 
           <div className="mt-6">

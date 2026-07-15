@@ -108,7 +108,7 @@ export default function InstitutionsPage() {
           onFilterApply={applyFilters}
         />
 
-        <div className="w-full overflow-x-auto rounded-[8px]">
+        <div className="cardcore-table-container">
           {loadingData ? (
             <div className="w-full h-[400px] flex items-center justify-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
@@ -119,24 +119,24 @@ export default function InstitutionsPage() {
               <p className="text-sm">Try adjusting your filters or search query</p>
             </div>
           ) : (
-            <table className="w-full min-w-full text-left border-collapse table-auto">
+            <table className="w-full min-w-full text-left border-collapse table-fixed">
               <thead>
-                <tr className="border-b border-gray-100 text-[13px] font-semibold bg-gray-100">
-                  <th className="py-4 pl-6 pr-4 font-bold text-[#4B5563]">Name</th>
-                  <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">Type</th>
-                  <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">Wallet ID</th>
-                  <th className="py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right">Created At</th>
+              <tr className="cardcore-table-header">
+                  <th className="w-[60%] py-4 pl-6 pr-4 font-bold text-[#4B5563] sm:w-[45%] lg:w-[35%]">Name</th>
+                  <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563] sm:w-[15%] lg:w-[15%]">Type</th>
+                  <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563] sm:w-[20%] lg:w-[25%]">Wallet ID</th>
+                  <th className="w-[40%] py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right sm:w-[20%] lg:w-[25%] whitespace-nowrap">Created At</th>
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-gray-100 text-[14px]">
+              <tbody className="divide-y divide-gray-100">
                 {institutions.map((inst, index) => {
                   const institutionId = inst.id || inst._id || `inst-${index}`;
                   return (
                     <tr
                       key={institutionId}
                       onClick={() => institutionId && router.push(`/dashboard/institutions/${institutionId}`)}
-                      className="hover:bg-slate-50/60 cursor-pointer transition-colors"
+                      className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors"
                     >
                       <td className="py-4 pl-6 pr-4 flex items-center gap-3">
                         <div className="w-[36px] h-[36px] bg-[#E0E7FF] text-[#4338CA] text-[12px] font-bold rounded-[4px] flex items-center justify-center shrink-0">

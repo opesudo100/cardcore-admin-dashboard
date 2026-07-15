@@ -162,7 +162,7 @@ export default function BillingPage() {
 
         <div className="w-full">
           <div className="space-y-4">
-            <div className="rounded-[18px] border border-[#E5E7EB] bg-white p-4 sm:p-5">
+            <div className="rounded-[10px] border border-gray-200 bg-white p-4 sm:p-5">
               <div className="mb-4">
                 <h2 className="text-[16px] font-[700] text-[#111827]">
                   Invoice workspace
@@ -181,7 +181,7 @@ export default function BillingPage() {
                 onFilterApply={handleFilterApply}
               />
 
-              <div className="w-full overflow-x-auto rounded-[8px] mt-4">
+              <div className="cardcore-table-container mt-4">
                 {loadingData ? (
                   <div className="w-full h-[400px] flex items-center justify-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
@@ -197,29 +197,21 @@ export default function BillingPage() {
                   <>
                     <table className="w-full min-w-full text-left border-collapse table-auto">
                       <thead>
-                        <tr className="border-b border-gray-100 text-[13px] font-semibold bg-gray-100">
-                          <th className="py-4 pl-6 pr-4 font-bold text-[#4B5563]">
-                            Date
-                          </th>
-                          <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">
-                            Client
-                          </th>
-                          <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">
-                            Amount
-                          </th>
-                          <th className="py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right">
-                            Status
-                          </th>
+                      <tr className="cardcore-table-header">
+                          <th className="py-4 pl-6 pr-4 font-bold text-[#4B5563]">Date</th>
+                          <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">Client</th>
+                          <th className="hidden sm:table-cell py-4 px-4 font-bold text-[#4B5563]">Amount</th>
+                          <th className="py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right">Status</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-gray-100 text-[14px]">
+                      <tbody className="divide-y divide-gray-100">
                         {filteredInvoices.map((invoice) => {
                           const isSelected = selectedInvoiceId === invoice._id;
                           return (
                             <tr
                               key={invoice._id}
                               onClick={() => setSelectedInvoiceId(invoice._id)}
-                              className={`hover:bg-slate-50/60 cursor-pointer transition-colors ${
+                              className={`cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors ${
                                 isSelected ? "bg-[#F5F7FF]" : ""
                               }`}
                             >

@@ -120,7 +120,7 @@ export default function UsersPage() {
           onSearchChange={handleSearch}
         />
 
-        <div className="w-full overflow-x-auto rounded-[8px]">
+        <div className="cardcore-table-container">
           {loadingData ? (
             <div className="w-full h-[400px] flex items-center justify-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
@@ -132,17 +132,17 @@ export default function UsersPage() {
             </div>
           ) : (
             <>
-              <table className="w-full min-w-full text-left border-collapse table-auto">
+              <table className="w-full min-w-full text-left border-collapse table-fixed">
                 <thead>
-                  <tr className="border-b border-gray-100 text-[13px] font-semibold bg-gray-100">
-                    <th className="py-4 pl-6 pr-4 font-bold text-[#4B5563]">Name</th>
-                    <th className="py-4 px-4 font-bold text-[#4B5563]">Role</th>
-                    <th className="hidden sm:table-cell py-4 pl-4 pr-6 font-bold text-[#4B5563] text-center">Status</th>
+                  <tr className="cardcore-table-header">
+                    <th className="w-[70%] py-4 pl-6 pr-4 font-bold text-[#4B5563] sm:w-[50%]">Name</th>
+                    <th className="w-[30%] py-4 px-4 font-bold text-[#4B5563] sm:w-[25%]">Role</th>
+                    <th className="hidden sm:table-cell py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right sm:w-[25%] whitespace-nowrap">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100 text-[14px]">
+                <tbody className="divide-y divide-gray-100">
                   {users.map((user) => (
-                    <tr key={user._id} className="hover:bg-slate-50/60 transition-colors">
+                    <tr key={user._id} className="cardcore-table-row hover:bg-slate-50/60 transition-colors cursor-pointer">
                       <td className="py-4 pl-6 pr-4">
                         <div className="flex items-center gap-3 overflow-hidden">
                           <div className="bg-gray-200 h-[37px] w-[47px] shrink-0 flex items-center justify-center text-gray-600 font-semibold rounded-[4px]">
@@ -162,7 +162,7 @@ export default function UsersPage() {
                         </div>
                       </td>
                       <td className="py-4 px-4 text-[#111827] font-medium capitalize">{user.role}</td>
-                      <td className="hidden sm:table-cell py-4 pl-4 pr-6 text-center">
+                      <td className="hidden sm:table-cell py-4 pl-4 pr-6 text-right">
                         {user.emailAddressVerified ? (
                           <span className="text-[14px] font-medium text-[#374151]">Active</span>
                         ) : (

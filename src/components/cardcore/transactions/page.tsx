@@ -220,76 +220,83 @@ export default function TransactionsPage() {
           onFilterApply={applyFilters}
         />
 
-        <div className="responsive-table bg-white min-h-[400px]">
-          {/* TABLE HEADER */}
-          <div className="cardcore-table-header flex items-center justify-between border-y border-[#E5E7EB] px-3 sm:px-0">
-            <div className="min-w-0 flex-1 sm:w-[30%] sm:flex-none sm:px-5">Card</div>
-            <div className="hidden sm:block sm:w-[12%] sm:px-3">RESPONSE</div>
-            <div className="hidden sm:block sm:w-[17%] sm:px-3">RRN</div>
-            <div className="hidden lg:block lg:w-[17%] lg:px-3">TERMINAL ID</div>
-            <div className="hidden xl:block xl:w-[10%] xl:px-3">STAN</div>
-            <div className="w-[120px] shrink-0 text-right sm:w-[24%] sm:px-5 lg:w-[14%]">AMOUNT</div>
-          </div>
-
-          {/* TABLE BODY */}
-          <div className="flex flex-col">
-            {loadingData ? (
-              <div className="w-full h-[350px] flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
-              </div>
-            ) : transactions.length === 0 ? (
-              <div className="w-full h-[350px] flex flex-col items-center justify-center text-gray-500">
-                <p className="text-lg font-medium">No transactions found</p>
-                <p className="text-sm">Try adjusting your filters or search query</p>
-              </div>
-            ) : (
-              transactions.map((item, index) => {
-                const style = getStatusStyle(item.transactionStatus || "");
-                const responseText = item.response?.["0"] || item.responseCode || "";
-                return (
-                  <div
-                    key={item.id || item._id || `tx-${index}`}
-                    onClick={() => router.push(`/dashboard/transactions/${item._id || item.id || item.rrn}`)}
-                    className={`cardcore-table-row flex w-full items-center justify-between gap-3 border-b border-[#E5E7EB] hover:bg-[#FAFAFA] cursor-pointer ${style.border}`}
-                  >
-                    <div className="min-w-0 flex-1 flex flex-col justify-center pl-3 sm:w-[30%] sm:flex-none sm:px-5">
-                      <span className="text-[12px] text-[#374151] font-semibold truncate sm:font-normal">
-                        {item.institution?.name || "N/A"} | {item.card?.customer?.firstName || "Unknown"} {item.card?.customer?.lastName || ""}
-                      </span>
-                      <span className="text-[12px] text-[#6B7280] mt-1">
-                        {getDate(item.createdAt || "")} | {getTime(item.createdAt || "")}
-                      </span>
-                      <span className="text-[10px] text-[#6B7280] mt-1 sm:hidden truncate">
-                        RRN: {item.rrn || "N/A"}
-                      </span>
-                    </div>
-                    <div className="hidden items-center gap-2 px-3 sm:flex sm:w-[12%]">
-                      {style.message && (
-                        <span className={`${style.box} text-white text-[10px] font-[700] px-2 py-[2px] rounded-full`}>
-                          {style.message}
-                        </span>
-                      )}
-                      <span className="text-[12px] text-[#374151] font-[500]">{responseText}</span>
-                    </div>
-                    <div className="hidden items-center px-3 text-[12px] text-[#374151] sm:flex sm:w-[17%] truncate">{item.rrn}</div>
-                    <div className="hidden items-center px-3 text-[12px] text-[#374151] lg:flex lg:w-[17%] truncate">{item.terminalId}</div>
-                    <div className="hidden items-center px-3 text-[12px] text-[#374151] xl:flex xl:w-[10%] truncate">{item.stan}</div>
-                    <div className="flex w-[120px] shrink-0 flex-col items-end justify-center pr-3 text-right text-[12px] font-[700] text-[#374151] sm:w-[24%] sm:px-5 lg:w-[14%]">
-                      {style.message && (
-                        <span className="mb-1 flex items-center gap-1 rounded-[10px] bg-gray-100 px-2 text-[10px] font-medium sm:hidden">
-                          <span className={`${style.box} h-fit rounded-full px-1 leading-[10px] text-white`}>
-                            {style.message}
+        <div className="cardcore-table-container min-h-[400px]">
+          {loadingData ? (
+            <div className="w-full h-[350px] flex items-center justify-center bg-white">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
+            </div>
+          ) : transactions.length === 0 ? (
+            <div className="w-full h-[350px] flex flex-col items-center justify-center text-gray-500 bg-white">
+              <p className="text-lg font-medium">No transactions found</p>
+              <p className="text-sm">Try adjusting your filters or search query</p>
+            </div>
+          ) : (
+            <table className="w-full table-fixed text-left border-collapse">
+              <thead>
+                <tr className="cardcore-table-header">
+                  <th className="w-[60%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[30%] sm:pl-6 sm:pr-4">Card</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[12%]">Response</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[17%]">RRN</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] lg:table-cell lg:w-[17%]">Terminal ID</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] xl:table-cell xl:w-[10%]">STAN</th>
+                  <th className="w-[40%] py-4 pl-2 pr-3 font-bold text-[#4B5563] text-right sm:w-[24%] sm:px-4 lg:w-[14%]">Amount</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 text-[12px]">
+                {transactions.map((item, index) => {
+                  const style = getStatusStyle(item.transactionStatus || "");
+                  const responseText = item.response?.["0"] || item.responseCode || "";
+                  return (
+                    <tr
+                      key={item.id || item._id || `tx-${index}`}
+                      onClick={() => router.push(`/dashboard/transactions/${item._id || item.id || item.rrn}`)}
+                      className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors bg-white"
+                    >
+                      <td className={`py-3 pl-3 pr-2 sm:py-4 sm:pl-6 sm:pr-4 ${style.border}`}>
+                        <div className="min-w-0 flex flex-col justify-center">
+                          <span className="text-[12px] text-[#374151] font-semibold truncate sm:font-normal">
+                            {item.institution?.name || "N/A"} | {item.card?.customer?.firstName || "Unknown"} {item.card?.customer?.lastName || ""}
                           </span>
-                          {responseText}
-                        </span>
-                      )}
-                      <span className="whitespace-nowrap">{formatToAmount(item.amount || 0, item.currencyCode)}</span>
-                    </div>
-                  </div>
-                );
-              })
-            )}
-          </div>
+                          <span className="text-[12px] text-[#6B7280] mt-1">
+                            {getDate(item.createdAt || "")} | {getTime(item.createdAt || "")}
+                          </span>
+                          <span className="text-[10px] text-[#6B7280] mt-1 sm:hidden truncate">
+                            RRN: {item.rrn || "N/A"}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="hidden py-4 px-4 sm:table-cell">
+                        <div className="flex items-center gap-2">
+                          {style.message && (
+                            <span className={`${style.box} text-white text-[10px] font-[700] px-2 py-[2px] rounded-full`}>
+                              {style.message}
+                            </span>
+                          )}
+                          <span className="text-[12px] text-[#374151] font-[500]">{responseText}</span>
+                        </div>
+                      </td>
+                      <td className="hidden py-4 px-4 font-mono text-gray-600 sm:table-cell truncate">{item.rrn}</td>
+                      <td className="hidden py-4 px-4 text-gray-600 lg:table-cell truncate">{item.terminalId}</td>
+                      <td className="hidden py-4 px-4 text-gray-500 xl:table-cell truncate">{item.stan}</td>
+                      <td className="py-3 pl-2 pr-3 text-right sm:py-4 sm:px-4">
+                        <div className="flex flex-col items-end justify-center font-[700] text-[#374151]">
+                          {style.message && (
+                            <span className="mb-1 flex items-center gap-1 rounded-[10px] bg-gray-100 px-2 text-[10px] font-medium sm:hidden">
+                              <span className={`${style.box} h-fit rounded-full px-1 leading-[10px] text-white`}>
+                                {style.message}
+                              </span>
+                              {responseText}
+                            </span>
+                          )}
+                          <span className="whitespace-nowrap">{formatToAmount(item.amount || 0, item.currencyCode)}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
 
         <div className="mt-6">

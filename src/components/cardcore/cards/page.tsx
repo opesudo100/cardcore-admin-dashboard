@@ -108,7 +108,7 @@ export default function CardsPage() {
         />
 
         {/* Table */}
-        <div className="responsive-table rounded-[2px] min-h-[400px]">
+        <div className="cardcore-table-container min-h-[400px]">
           {loadingData ? (
             <div className="w-full h-[400px] flex items-center justify-center bg-white">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
@@ -122,20 +122,20 @@ export default function CardsPage() {
             <table className="w-full table-fixed text-left border-collapse">
               <thead>
                 <tr className="cardcore-table-header">
-                  <th className="w-[64%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[30%] sm:pl-6 sm:pr-4">Issuer</th>
-                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[30%]">Card Details</th>
+                  <th className="w-[60%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[35%] lg:w-[22%] sm:pl-6 sm:pr-4">Issuer</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[35%] lg:w-[22%]">Card Details</th>
                   <th className="hidden py-4 px-4 font-bold text-[#4B5563] lg:table-cell lg:w-[12%]">Status</th>
-                  <th className="w-[36%] py-4 pl-2 pr-3 font-bold text-[#4B5563] text-right sm:w-[18%] sm:px-4 sm:text-left">Card Scheme</th>
-                  <th className="hidden py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right lg:table-cell lg:w-[10%]">Created At</th>
+                  <th className="w-[40%] py-4 pl-2 pr-3 font-bold text-[#4B5563] text-right sm:w-[30%] lg:w-[22%] sm:px-4 sm:text-left">Card Scheme</th>
+                  <th className="hidden py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right lg:table-cell lg:w-[22%] whitespace-nowrap">Created At</th>
                 </tr>
               </thead>
 
-              <tbody className="divide-y divide-gray-100 text-[13px]">
+              <tbody className="divide-y divide-gray-100">
                 {cards.map((card, index) => (
                   <tr
                     key={card.id || card._id || `card-${index}`}
                     onClick={() => router.push(`/dashboard/cards/${card.id || card._id}`)}
-                    className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors bg-white"
+                    className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer"
                   >
                     <td className="py-3 pl-3 pr-2 sm:py-4 sm:pl-6 sm:pr-4">
                       <div className="flex min-w-0 flex-col">

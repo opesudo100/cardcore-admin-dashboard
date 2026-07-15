@@ -216,162 +216,167 @@ export const ManageUsersTab = () => {
       </div>
 
       {/* TABLE */}
-      <div className="responsive-table bg-white rounded-[5px] shadow-sm">
-        {/* HEADER */}
-        <div className="cardcore-table-header flex items-center justify-between px-3 uppercase tracking-wider sm:px-6">
-          <div className="min-w-0 flex-1 sm:w-[50%] sm:flex-none">User Details</div>
-          <div className="hidden sm:block sm:w-[25%]">Role</div>
-          <div className="hidden sm:block sm:w-[17%]">Status</div>
-          <div className="w-[44px] shrink-0"></div>
-        </div>
-
-        {/* BODY */}
-        <div className="w-full divide-y divide-gray-300">
-          {loading ? (
-            <div className="w-full h-[300px] flex items-center justify-center">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#09245A]"></div>
-            </div>
-          ) : users.length === 0 ? (
-            <div className="w-full h-[300px] flex flex-col items-center justify-center text-gray-400">
-              <p className="text-lg font-medium">No users found</p>
-              <p className="text-sm">Add a new user to get started</p>
-            </div>
-          ) : (
-            users.map((user) => (
-              <div
-                key={user._id}
-                className="cardcore-table-row flex min-h-[86px] items-center justify-between gap-3 px-3 hover:bg-[#F9FAFB] transition-colors sm:px-6"
-              >
-                {/* USER */}
-                <div className="min-w-0 flex flex-1 items-center gap-3 sm:w-[50%] sm:flex-none sm:gap-4">
-                  <div className="w-10 h-10 shrink-0 rounded-full bg-[#E5E7EB] flex items-center justify-center text-[#091D4A] font-bold text-[14px]">
-                    {user.firstName?.[0]}{user.lastName?.[0]}
-                  </div>
-                  <div className="flex min-w-0 flex-col">
-                    <span className="truncate text-[14px] font-[700] text-[#111827] sm:text-[15px]">
-                      {user.firstName} {user.lastName}
-                    </span>
-                    <span className="truncate text-[12px] text-gray-500 sm:text-[13px]">
-                      {user.emailAddress || user.email}
-                    </span>
-                    <span className="mt-1 text-[11px] font-[600] capitalize text-[#091D4A] sm:hidden">
-                      {getRoleLabel(user)}
-                    </span>
-                    <span className={`mt-1 w-fit px-2 py-0.5 rounded text-[9px] font-[700] uppercase tracking-wide sm:hidden ${getStatusColor(user.status || "")}`}>
+      <div className="cardcore-table-container">
+        <table className="w-full table-fixed text-left border-collapse">
+          <thead>
+            <tr className="cardcore-table-header">
+              <th className="w-[60%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[50%] sm:pl-6 sm:pr-4">User Details</th>
+              <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[25%]">Role</th>
+              <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[17%]">Status</th>
+              <th className="w-[40px] shrink-0"></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 text-[14px]">
+            {loading ? (
+              <tr>
+                <td colSpan={4} className="py-16 text-center">
+                  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#09245A] mx-auto"></div>
+                </td>
+              </tr>
+            ) : users.length === 0 ? (
+              <tr>
+                <td colSpan={4} className="py-16 text-center text-gray-400">
+                  <p className="text-lg font-medium">No users found</p>
+                  <p className="text-sm">Add a new user to get started</p>
+                </td>
+              </tr>
+            ) : (
+              users.map((user) => (
+                <tr
+                  key={user._id}
+                  className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors bg-white"
+                >
+                  <td className="py-3 pl-3 pr-2 sm:py-4 sm:pl-6 sm:pr-4">
+                    <div className="min-w-0 flex items-center gap-3 sm:gap-4">
+                      <div className="w-10 h-10 shrink-0 rounded-full bg-[#E5E7EB] flex items-center justify-center text-[#091D4A] font-bold text-[14px]">
+                        {user.firstName?.[0]}{user.lastName?.[0]}
+                      </div>
+                      <div className="flex min-w-0 flex-col">
+                        <span className="truncate text-[14px] font-[700] text-[#111827] sm:text-[15px]">
+                          {user.firstName} {user.lastName}
+                        </span>
+                        <span className="truncate text-[12px] text-gray-500 sm:text-[13px]">
+                          {user.emailAddress || user.email}
+                        </span>
+                        <span className="mt-1 text-[11px] font-[600] capitalize text-[#091D4A] sm:hidden">
+                          {getRoleLabel(user)}
+                        </span>
+                        <span className={`mt-1 w-fit px-2 py-0.5 rounded text-[9px] font-[700] uppercase tracking-wide sm:hidden ${getStatusColor(user.status || "")}`}>
+                          {user.status || "inactive"}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="hidden py-4 px-4 sm:table-cell">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[14px] font-[600] text-[#091D4A]">
+                        {getRoleLabel(user)}
+                      </span>
+                      <span className="text-[11px] text-gray-400 truncate max-w-[150px]">
+                        {getPermissionsCount(user)} permissions assigned
+                      </span>
+                    </div>
+                  </td>
+                  <td className="hidden py-4 px-4 sm:table-cell">
+                    <span className={`px-3 py-1 rounded text-[11px] font-[700] uppercase tracking-wide ${getStatusColor(user.status || "")}`}>
                       {user.status || "inactive"}
                     </span>
-                  </div>
-                </div>
-
-                {/* ROLE */}
-                <div className="hidden flex-col gap-1 sm:flex sm:w-[25%]">
-                  <span className="text-[14px] font-[600] text-[#091D4A]">
-                    {getRoleLabel(user)}
-                  </span>
-                  <span className="text-[11px] text-gray-400 truncate max-w-[150px]">
-                    {getPermissionsCount(user)} permissions assigned
-                  </span>
-                </div>
-
-                {/* STATUS */}
-                <div className="hidden sm:block sm:w-[17%]">
-                  <span className={`px-3 py-1 rounded text-[11px] font-[700] uppercase tracking-wide ${getStatusColor(user.status || "")}`}>
-                    {user.status || "inactive"}
-                  </span>
-                </div>
-
-                {/* ACTION */}
-                <div className="relative flex w-[44px] shrink-0 justify-end">
-                  {canManageUser(user) && <button 
-                    onClick={() => setShowOptionId(showOptionId === user._id ? null : user._id)}
-                    className="p-2 hover:bg-gray-200 rounded-full transition-colors text-gray-400 hover:text-gray-600"
-                  >
-                    {actionLoading === user._id ? (
-                      <div className="h-4 w-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
-                    ) : (
-                      <EllipsisVertical size={20} />
-                    )}
-                  </button>}
-
-                  {showOptionId === user._id && (
-                    <div 
-                      ref={optionsRef}
-                      className="absolute right-0 top-10 w-[min(200px,calc(100vw-32px))] bg-white border border-[#E5E7EB] rounded-[8px] shadow-lg z-20 overflow-hidden py-1 animate-in fade-in zoom-in-95 duration-100"
-                    >
-                      {(getRoleLabel(user) === "super admin" || getRoleLabel(user) === "admin user") && (
-                        <button
-                          onClick={() => {
-                            setEditUser(user);
-                            setShowOptionId(null);
-                          }}
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors"
+                  </td>
+                  <td className="py-3 px-2 text-right">
+                    <div className="relative flex justify-end">
+                      {canManageUser(user) && (
+                        <button 
+                          onClick={() => setShowOptionId(showOptionId === user._id ? null : user._id)}
+                          className="p-2 hover:bg-gray-200 rounded-full transition-colors text-gray-400 hover:text-gray-600"
                         >
-                          <Pencil size={16} className="text-gray-500" />
-                          Edit User
+                          {actionLoading === user._id ? (
+                            <div className="h-4 w-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                          ) : (
+                            <EllipsisVertical size={20} />
+                          )}
                         </button>
                       )}
-
-                      <button 
-                        onClick={() => toggleStatus(user)}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors"
-                        disabled={Boolean(actionLoading)}
-                      >
-                        {user.status === "active" ? (
-                          <><UserX size={16} className="text-red-500" /> Disable User</>
-                        ) : (
-                          <><UserCheck size={16} className="text-green-500" /> Enable User</>
-                        )}
-                      </button>
                       
-                      <button 
-                        onClick={() => blockUser(user)}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors"
-                        disabled={Boolean(actionLoading)}
-                      >
-                        <ShieldAlert size={16} className="text-orange-500" />
-                        {["blocked", "suspended", "inactive"].includes(user.status || "") ? "Activate User" : "Block User"}
-                      </button>
-
-                      {user.status === "active" && (
-                        <button
-                          onClick={() => toggleTwoFactor(user)}
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors"
-                          disabled={Boolean(actionLoading)}
+                      {showOptionId === user._id && (
+                        <div 
+                          ref={optionsRef}
+                          className="absolute right-0 top-10 w-[200px] bg-white border border-[#E5E7EB] rounded-[8px] shadow-lg z-20 overflow-hidden py-1 animate-in fade-in zoom-in-95 duration-100"
                         >
-                          <ShieldCheck size={16} className="text-indigo-500" />
-                          {user.twoFactorAuthEnabled ? "Disable" : "Enable"} 2FA
-                        </button>
-                      )}
+                          {(getRoleLabel(user) === "super admin" || getRoleLabel(user) === "admin user") && (
+                            <button
+                              onClick={() => {
+                                setEditUser(user);
+                                setShowOptionId(null);
+                              }}
+                              className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors"
+                            >
+                              <Pencil size={16} className="text-gray-500" />
+                              Edit User
+                            </button>
+                          )}
+                          <button 
+                            onClick={() => toggleStatus(user)}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors"
+                            disabled={Boolean(actionLoading)}
+                          >
+                            {user.status === "active" ? (
+                              <><UserX size={16} className="text-red-500" /> Disable User</>
+                            ) : (
+                              <><UserCheck size={16} className="text-green-500" /> Enable User</>
+                            )}
+                          </button>
+                          
+                          <button 
+                            onClick={() => blockUser(user)}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors"
+                            disabled={Boolean(actionLoading)}
+                          >
+                            <ShieldAlert size={16} className="text-orange-500" />
+                            {["blocked", "suspended", "inactive"].includes(user.status || "") ? "Activate User" : "Block User"}
+                          </button>
 
-                      {user.status === "pending" && (
-                        <button
-                          onClick={() => resendInvitation(user._id)}
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-100"
-                          disabled={Boolean(actionLoading)}
-                        >
-                          <Mail size={16} className="text-blue-500" />
-                          Resend Invitation
-                        </button>
-                      )}
+                          {user.status === "active" && (
+                            <button
+                              onClick={() => toggleTwoFactor(user)}
+                              className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors"
+                              disabled={Boolean(actionLoading)}
+                            >
+                              <ShieldCheck size={16} className="text-indigo-500" />
+                              {user.twoFactorAuthEnabled ? "Disable" : "Enable"} 2FA
+                            </button>
+                          )}
 
-                      <button
-                        onClick={() => {
-                          setDeleteUser(user);
-                          setShowOptionId(null);
-                        }}
-                        className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"
-                        disabled={Boolean(actionLoading)}
-                      >
-                        <Trash2 size={16} />
-                        Delete User
-                      </button>
+                          {user.status === "pending" && (
+                            <button
+                              onClick={() => resendInvitation(user._id)}
+                              className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-100"
+                              disabled={Boolean(actionLoading)}
+                            >
+                              <Mail size={16} className="text-blue-500" />
+                              Resend Invitation
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => {
+                              setDeleteUser(user);
+                              setShowOptionId(null);
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[13px] text-red-600 hover:bg-red-50 transition-colors border-t border-gray-100"
+                            disabled={Boolean(actionLoading)}
+                          >
+                            <Trash2 size={16} />
+                            Delete User
+                          </button>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
 
       {inviteModal && (

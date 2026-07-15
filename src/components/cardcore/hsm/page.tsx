@@ -87,56 +87,61 @@ export default function HsmPage() {
         />
 
         {/* TABLE CONTAINER */}
-        <div className="responsive-table bg-white rounded-[4px] min-h-[400px]">
-          <div className="cardcore-table-header flex items-center justify-between uppercase tracking-wider px-3 sm:px-0">
-            <div className="min-w-0 flex-1 sm:w-[20%] sm:flex-none sm:px-5">HSM Code</div>
-            <div className="hidden sm:block sm:w-[20%] sm:px-3">IP Address</div>
-            <div className="hidden sm:block sm:w-[12%] sm:px-3">Port</div>
-            <div className="hidden sm:block sm:w-[15%] sm:px-3">Primary</div>
-            <div className="hidden sm:block sm:w-[15%] sm:px-3">Status</div>
-            <div className="w-[108px] shrink-0 text-right sm:w-[18%] sm:px-5">Created At</div>
-          </div>
-
-          <div className="w-full flex flex-col">
-            {loadingData ? (
-              <div className="w-full h-[350px] flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
-              </div>
-            ) : hsms.length === 0 ? (
-              <div className="w-full h-[350px] flex flex-col items-center justify-center text-gray-500">
-                <p className="text-lg font-medium">No HSM clusters found</p>
-                <p className="text-sm">Try adjusting your filters or search query</p>
-              </div>
-            ) : (
-              hsms.map((item, index) => (
-                <div
-                  key={item.id || item._id || `hsm-${index}`}
-                  className="cardcore-table-row flex w-full items-center justify-between gap-3 border-b border-[#E5E7EB] text-[12px]"
-                >
-                  <div className="min-w-0 flex-1 pl-3 font-semibold sm:w-[20%] sm:flex-none sm:px-5 sm:font-normal">
-                    <div className="truncate">{item.code}</div>
-                    <div className="mt-1 w-fit max-w-full truncate bg-gray-100 px-1 text-[11px] font-normal text-gray-600 sm:hidden">
-                      {item.ip} : {item.port}
-                    </div>
-                  </div>
-                  <div className="hidden px-3 sm:block sm:w-[20%] truncate">{item.ip}</div>
-                  <div className="hidden px-3 sm:block sm:w-[12%]">{item.port}</div>
-                  <div className="hidden px-3 sm:block sm:w-[15%]">{item.isPrimary ? "true" : "false"}</div>
-                  <div className="hidden px-3 sm:block sm:w-[15%]">
-                    <span className={`px-2 py-1 text-[10px] font-bold uppercase rounded-[4px] ${item.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                      {item.status || 'inactive'}
-                    </span>
-                  </div>
-                  <div className="flex w-[108px] shrink-0 flex-col items-end pr-3 text-right font-medium text-gray-500 sm:w-[18%] sm:px-5">
-                    <span className={`mb-1 px-1.5 py-0.5 text-[9px] font-bold uppercase rounded-[4px] sm:hidden ${item.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                      {item.status || 'inactive'}
-                    </span>
-                    <span>{getFormattedDate(item.createdAt)}</span>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
+        <div className="cardcore-table-container min-h-[400px]">
+          {loadingData ? (
+            <div className="w-full h-[350px] flex items-center justify-center bg-white">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
+            </div>
+          ) : hsms.length === 0 ? (
+            <div className="w-full h-[350px] flex flex-col items-center justify-center text-gray-500 bg-white">
+              <p className="text-lg font-medium">No HSM clusters found</p>
+              <p className="text-sm">Try adjusting your filters or search query</p>
+            </div>
+          ) : (
+            <table className="w-full table-fixed text-left border-collapse">
+              <thead>
+                <tr className="cardcore-table-header">
+                  <th className="w-[60%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[20%] sm:pl-6 sm:pr-4">HSM Code</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[20%]">IP Address</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[12%]">Port</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[15%]">Primary</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[15%]">Status</th>
+                  <th className="w-[40%] py-4 pl-2 pr-6 font-bold text-[#4B5563] text-right sm:w-[18%] whitespace-nowrap">Created At</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 text-[12px]">
+                {hsms.map((item, index) => (
+                  <tr
+                    key={item.id || item._id || `hsm-${index}`}
+                    className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors bg-white"
+                  >
+                    <td className="py-3 pl-3 pr-2 sm:py-4 sm:pl-6 sm:pr-4 font-semibold sm:font-normal">
+                      <div className="truncate">{item.code}</div>
+                      <div className="mt-1 w-fit max-w-full truncate bg-gray-100 px-1 text-[11px] font-normal text-gray-600 sm:hidden">
+                        {item.ip} : {item.port}
+                      </div>
+                    </td>
+                    <td className="hidden py-4 px-4 sm:table-cell truncate">{item.ip}</td>
+                    <td className="hidden py-4 px-4 sm:table-cell">{item.port}</td>
+                    <td className="hidden py-4 px-4 sm:table-cell">{item.isPrimary ? "true" : "false"}</td>
+                    <td className="hidden py-4 px-4 sm:table-cell">
+                      <span className={`px-2 py-1 text-[10px] font-bold uppercase rounded-[4px] ${item.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                        {item.status || 'inactive'}
+                      </span>
+                    </td>
+                    <td className="py-3 pl-2 pr-6 text-right sm:py-4">
+                      <div className="flex flex-col items-end text-right font-medium text-gray-500">
+                        <span className={`mb-1 px-1.5 py-0.5 text-[9px] font-bold uppercase rounded-[4px] sm:hidden ${item.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                          {item.status || 'inactive'}
+                        </span>
+                        <span>{getFormattedDate(item.createdAt)}</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* PAGINATION */}

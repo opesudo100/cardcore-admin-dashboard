@@ -122,7 +122,7 @@ export default function InstitutionsPage() {
         onFilterApply={applyFilters}
       />
 
-      <div className="responsive-table rounded-[8px]">
+      <div className="cardcore-table-container">
         {loadingData ? (
           <div className="w-full h-[400px] flex items-center justify-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
@@ -135,11 +135,11 @@ export default function InstitutionsPage() {
         ) : (
           <table className="w-full table-fixed text-left border-collapse">
             <thead>
-              <tr className="cardcore-table-header">
-                <th className="w-[68%] py-4 pl-3 pr-2 text-left font-bold text-[#4B5563] sm:w-[45%] sm:pl-6 sm:pr-4">Name</th>
-                <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[20%]">Institution code</th>
-                <th className="w-[32%] py-4 pl-2 pr-3 text-right font-bold text-[#4B5563] sm:w-[15%] sm:px-4 sm:text-left">Status</th>
-                <th className="hidden py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right lg:table-cell lg:w-[20%]">Created At</th>
+                          <tr className="cardcore-table-header">
+                <th className="w-[60%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[50%] lg:w-[32%] sm:pl-6 sm:pr-4">Name</th>
+                <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[30%] lg:w-[26%]">Institution code</th>
+                <th className="w-[40%] py-4 pl-2 pr-3 font-bold text-[#4B5563] text-right sm:w-[20%] lg:w-[14%] sm:px-4 sm:text-left">Status</th>
+                <th className="hidden py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right lg:table-cell lg:w-[28%] whitespace-nowrap">Created At</th>
               </tr>
             </thead>
 

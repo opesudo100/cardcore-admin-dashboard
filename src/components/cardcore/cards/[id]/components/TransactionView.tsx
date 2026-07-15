@@ -67,14 +67,14 @@ export function TransactionView({ id }: { id: string }) {
         />
       </div>
 
-      <div className="responsive-table mt-4 w-full">
+      <div className="cardcore-table-container mt-4 w-full">
         <table className="w-full table-fixed text-left border-collapse">
           <thead>
             <tr className="cardcore-table-header">
-              <th className="w-[58%] py-3 pl-3 pr-2 text-[11px] font-semibold text-[#6B7280] uppercase sm:w-[28%] sm:px-6">Terminal ID</th>
-              <th className="hidden py-3 px-6 text-[11px] font-semibold text-[#6B7280] uppercase sm:table-cell sm:w-[28%]">RRN</th>
-              <th className="hidden py-3 px-6 text-[11px] font-semibold text-[#6B7280] uppercase lg:table-cell lg:w-[18%]">Response</th>
-              <th className="w-[42%] py-3 pl-2 pr-3 text-[11px] font-semibold text-[#6B7280] uppercase text-right sm:w-[26%] sm:px-6">Amount</th>
+              <th className="w-[55%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[28%] sm:pl-6 sm:pr-4">Terminal ID</th>
+              <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[28%]">RRN</th>
+              <th className="hidden py-4 px-4 font-bold text-[#4B5563] lg:table-cell lg:w-[18%]">Response</th>
+              <th className="w-[45%] py-4 pl-2 pr-3 font-bold text-[#4B5563] text-right sm:w-[26%] sm:px-4">Amount</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#E5E7EB]">

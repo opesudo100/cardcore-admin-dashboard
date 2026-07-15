@@ -115,59 +115,61 @@ export default function KeysPage() {
           onFilterApply={applyFilters}
         />
 
-        <div className="responsive-table bg-white rounded-[4px] min-h-[400px]">
-          <div className="cardcore-table-header flex items-center justify-between px-3 uppercase tracking-wider sm:px-5">
-            <div className="min-w-0 flex-1 sm:w-[20%] sm:flex-none">Name</div>
-            <div className="hidden sm:block sm:w-[18%]">HSM</div>
-            <div className="hidden sm:block sm:w-[20%]">Key</div>
-            <div className="hidden sm:block sm:w-[17%]">KCV</div>
-            <div className="w-[86px] shrink-0 text-right sm:w-[13%] sm:text-left">Status</div>
-            <div className="hidden lg:block lg:w-[12%] lg:text-right">Created At</div>
-          </div>
-
-          <div className="divide-y divide-gray-100 flex flex-col">
-            {loadingData ? (
-              <div className="w-full h-[350px] flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
-              </div>
-            ) : keys.length === 0 ? (
-              <div className="w-full h-[350px] flex flex-col items-center justify-center text-gray-500">
-                <p className="text-lg font-medium">No cryptographic keys found</p>
-                <p className="text-sm">Try adjusting your filters or search query</p>
-              </div>
-            ) : (
-              keys.map((item, index) => (
-                <button
-                  key={item.id || item._id || `key-${index}`}
-                  type="button"
-                  onClick={() => router.push(`/dashboard/keys/${item.id || item._id}`)}
-                  className="cardcore-table-row flex min-h-[70px] w-full items-center justify-between gap-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer px-3 text-[13px] text-left transition-colors sm:px-5"
-                >
-                  <div className="min-w-0 flex-1 font-semibold text-[#091D4A] sm:w-[20%] sm:flex-none">
-                    <div className="truncate">{item.name}</div>
-                    <div className="mt-1 font-mono text-[11px] font-normal text-gray-500 sm:hidden truncate">
-                      {shortenSecret(item.key)}
-                    </div>
-                  </div>
-                  <div className="hidden text-gray-600 sm:block sm:w-[18%] truncate">{item.hsmCode || item.hsm || "N/A"}</div>
-                  <div className="hidden font-mono text-gray-500 sm:block sm:w-[20%] truncate pr-2">{shortenSecret(item.key)}</div>
-                  <div className="hidden font-mono text-gray-500 sm:block sm:w-[17%] truncate pr-2">{shortenSecret(item.kcv)}</div>
-                  <div className="w-[86px] shrink-0 text-right sm:w-[13%] sm:text-left">
-                    <span
-                      className={`px-2.5 py-1 text-[10px] font-extrabold uppercase rounded-[4px] tracking-wider ${
-                        item.status === "active"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {item.status || "inactive"}
-                    </span>
-                  </div>
-                  <div className="hidden text-right text-gray-500 lg:block lg:w-[12%]">{getFormattedDate(item.createdAt)}</div>
-                </button>
-              ))
-            )}
-          </div>
+        <div className="cardcore-table-container min-h-[400px]">
+          {loadingData ? (
+            <div className="w-full h-[350px] flex items-center justify-center bg-white">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#09245A]"></div>
+            </div>
+          ) : keys.length === 0 ? (
+            <div className="w-full h-[350px] flex flex-col items-center justify-center text-gray-500 bg-white">
+              <p className="text-lg font-medium">No cryptographic keys found</p>
+              <p className="text-sm">Try adjusting your filters or search query</p>
+            </div>
+          ) : (
+            <table className="w-full table-fixed text-left border-collapse">
+              <thead>
+                <tr className="cardcore-table-header">
+                  <th className="w-[60%] py-4 pl-3 pr-2 font-bold text-[#4B5563] sm:w-[20%] sm:pl-6 sm:pr-4">Name</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[18%]">HSM</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[20%]">Key</th>
+                  <th className="hidden py-4 px-4 font-bold text-[#4B5563] sm:table-cell sm:w-[17%]">KCV</th>
+                  <th className="w-[40%] py-4 pl-2 pr-3 font-bold text-[#4B5563] text-right sm:w-[13%] sm:px-4 sm:text-left">Status</th>
+                  <th className="hidden py-4 pl-4 pr-6 font-bold text-[#4B5563] text-right lg:table-cell lg:w-[12%]">Created At</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 text-[13px]">
+                {keys.map((item, index) => (
+                  <tr
+                    key={item.id || item._id || `key-${index}`}
+                    onClick={() => router.push(`/dashboard/keys/${item.id || item._id}`)}
+                    className="cardcore-table-row hover:bg-slate-50/60 cursor-pointer transition-colors bg-white"
+                  >
+                    <td className="py-3 pl-3 pr-2 sm:py-4 sm:pl-6 sm:pr-4 font-semibold text-[#091D4A]">
+                      <div className="truncate">{item.name}</div>
+                      <div className="mt-1 font-mono text-[11px] font-normal text-gray-500 sm:hidden truncate">
+                        {shortenSecret(item.key)}
+                      </div>
+                    </td>
+                    <td className="hidden py-4 px-4 text-gray-600 sm:table-cell truncate">{item.hsmCode || item.hsm || "N/A"}</td>
+                    <td className="hidden py-4 px-4 font-mono text-gray-500 sm:table-cell truncate pr-2">{shortenSecret(item.key)}</td>
+                    <td className="hidden py-4 px-4 font-mono text-gray-500 sm:table-cell truncate pr-2">{shortenSecret(item.kcv)}</td>
+                    <td className="py-3 pl-2 pr-3 text-right sm:py-4 sm:px-4 sm:text-left">
+                      <span
+                        className={`px-2.5 py-1 text-[10px] font-extrabold uppercase rounded-[4px] tracking-wider ${
+                          item.status === "active"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {item.status || "inactive"}
+                      </span>
+                    </td>
+                    <td className="hidden py-4 pl-4 pr-6 text-gray-500 text-right lg:table-cell whitespace-nowrap">{getFormattedDate(item.createdAt)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         <div className="mt-6">
